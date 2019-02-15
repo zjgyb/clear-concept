@@ -12,7 +12,7 @@
 
 ## Vue
 
-描述：Vue环境没报错，也能正常显示数据，但是浏览器控制台会报错。
+### 描述：Vue环境没报错，也能正常显示数据，但是浏览器控制台会报错。
 
 **解决**：Vue里面的数据不能超过两级；如果超过两级需要在父元素判断一下，通过判断二级JSON是否存在数据解决。
 
@@ -23,3 +23,51 @@
 + <span v-if="seller.supports">{{ seller.supports[0].description }}</span>
 ```
 
+### 描述：在最开始的文件内最外层`template`中使用`v-if`和`v-else`始终渲染`v-else`部分
+
+举例：
+
+```html
+<template v-if="ok">
+  <p>hello</p>
+</template>
+<template v-else>
+  <p>world</p>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        ok: true
+      }
+    }
+  }
+</script>
+```
+
+## VS Code
+
+### 描述：解决 VS Code 中 vue 文件格式化时单引号变双引号的问题
+
+**解决**：在`setting.json`中配置如下
+
+```js
+"vetur.format.defaultFormatterOptions": {
+  "js-beautify-html": {
+      "wrap_attributes": "force-expand-multiline"
+  },
+  "prettyhtml": {
+      "printWidth": 100,
+      "singleQuote": false,
+      "wrapAttributes": false,
+      "sortAttributes": false
+  },
+  // start here
+  "prettier": {
+      // "semi": false,   --semicolon
+      "singleQuote": true
+  }
+  // end here
+}
+```

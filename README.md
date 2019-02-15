@@ -44,3 +44,15 @@ data: {
   }
 }
 ```
+
+#### slot
+
+* 在父元素中定义的slot可以把里面的元素增加到子元素的最后部分
+* 如果父元素没有在slot中增加内容，则显示子元素中slot的内容
+
+[参考地址](https://alligator.io/vuejs/component-slots/)
+
+## Vue CLI 3
+
+**Q:** CSS中scoped作用
+**A:** scoped 其实就加上一个 hash，使 css 变量能够只对所在文件起作用

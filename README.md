@@ -55,4 +55,82 @@ data: {
 ## Vue CLI 3
 
 **Q:** CSS中scoped作用
+
 **A:** scoped 其实就加上一个 hash，使 css 变量能够只对所在文件起作用
+
+---
+**Q:** Preset的作用
+
+**A:** 保存一个项目的目录结构，它的文件格式是`~/.vuerc`，方便他人开发时使用这个目录结构
+
+---
+**Q:** 如何进行单个vue文件的开发预览
+
+**A:** 
+1. 先使用命令`npm install -g @vue/cli-service-global`
+2. 浏览器预览`vue serve [filename]`
+---
+**Q:** 如何查看vue-cli中webpack配置
+
+**A:** 使用命令`vue inspect`
+
+---
+
+[官网地址](https://cli.vuejs.org/zh/guide/)
+
+## 各种工具包的配置
+
+### marked在vue中的使用——与markdown相关
+
+先`yarn add marked`或者`npm install marked`
+
+然后使用，单纯的装换
+```html
+<template>
+  <div v-html="compiledMarkdown"></div>
+</template>
+<script>
+  import marked from 'marked';
+
+  export default {
+    data() {
+      return {
+        input: '## hello'
+      }
+    },
+    computed: {
+      compiledMarkdown() {
+        return marked(this.input, { sanitize: true });
+      }
+    },
+  }
+</script>
+```
+
+输入转换
+
+```html
+<template>
+  <div class="editor">
+    <textarea :value="input"></textarea>
+    <div v-html="compiledMarkdown"></div>
+  </div>
+</template>
+<script>
+  import marked from 'marked';
+
+  export default {
+    data() {
+      return {
+        input: '## hello\n ## world'
+      }
+    },
+    computed: {
+      compiledMarkdown() {
+        return marked(this.input, { sanitize: true });
+      }
+    },
+  }
+</script>
+```
+[传送门](https://github.com/markedjs/marked)

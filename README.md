@@ -134,3 +134,37 @@ data: {
 </script>
 ```
 [传送门](https://github.com/markedjs/marked)
+
+## tips
+
+### preview image files
+```html
+<template>
+  <div class="box">
+    <div class="img-preview" v-if="imageData.length > 0">
+      <img class="preview" :src="imageData">
+    </div>
+    <input type="file" @change="getImgData" accept="image/*">
+  </div>
+</template>
+export default {
+  data() {
+    return {
+      imageData: ''
+    };
+  },
+  methods: {
+    getImgData(event) {
+      const input = event.target;
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imageData = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  }
+};
+```
+[参考来源](https://gist.github.com/zmts/9cfdba90897db1615b6e9fda6069a124)

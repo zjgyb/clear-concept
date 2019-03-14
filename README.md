@@ -27,7 +27,9 @@
 
 #### 计算属性缓存VS方法
 计算属性缓存：`computed`
+
 方法：`method`
+
 计算属性的值是缓存的，因此计算属性在直接需要渲染时比方法更加合适，计算属性不会影响其他渲染函数。
 
 #### 对象语法
@@ -168,3 +170,99 @@ export default {
 };
 ```
 [参考来源](https://gist.github.com/zmts/9cfdba90897db1615b6e9fda6069a124)
+
+### 动态改变Vue Component(动态组件)
+app.vue
+```html
+<template>
+  <div id="app">
+    <component :is="view"></component>
+  </div>
+</template>
+<script>
+export default {
+  name: 'app',
+  data() {
+    return {
+      view: this.$store.state.page
+    }
+  },
+  mounted() {
+    this.$root.$on('update', this.update);
+  },
+  methods: {
+    update() {
+      this.view = this.$store.state.page;
+    }
+  }
+}
+</script>
+```
+其他文件
+```html
+<script>
+export default {
+  methods: {
+    changeComponent() {
+      // 这里使用了vuex进行状态管理
+      this.$store.state.page = '...';
+      this.$root.$emit('update');
+    }
+  }
+}
+</script>
+```
+
+### 父子元素通信
+
+子组件
+
+```html
+<template>
+  <div @click="changeSomething">some message</div>
+</template>
+<script>
+  // childComponent
+  export default {
+    data() {
+      return {
+        param1: 'test'
+      }
+    },
+    methods: {
+      changeSomething() {
+        this.$emit('changeSomethingInParent', this.param1);
+      }
+    }
+  }
+</script>
+```
+
+父组件
+```html
+<template>
+  <div>
+    <child-component @changeSomethingInParent="changeData" />
+  </div>
+</template>
+<script>
+  // parentComponent
+  import ChildComponent from './documentToChildComponent.vue';
+  
+  export default {
+    components: {
+      ChildComponent
+    },
+    data() {
+      return {
+        data: ''
+      }
+    },
+    methods: {
+      changeData(param1) {
+        this.data = param1;
+      }
+    }
+  }
+</script>
+```

@@ -54,6 +54,41 @@ data: {
 
 [参考地址](https://alligator.io/vuejs/component-slots/)
 
+#### key
+
+在大部分的情况下是与`v-for`中配合使用的，目的是为了标识插入的数据在一条数据变更的时候不至于全部更新，然而有时候你需要重新渲染某一个组价，那就需要用到key了
+
+我喜欢使用`Math.random()`去改变key值
+
+#### watch
+
+一开始是不会去查看用户的改变的，只有数据改变时才查看数据的改变，这里是想要介绍如何某些值如何监听
+
+Props
++ 如果是String类型的，则直接和一般的监听一样
++ 如果是Object类型的，则需要加引号的方式去监听，例如：
+```js
+export default {
+  watch: {
+    'test.num'(newValue, oldValue) {
+      ...
+    }
+  }
+}
+```
+
+Vuex
++ 如果想监听Vuex也是可以的，例如：
+```js
+export default {
+  watch: {
+    '$store.state.num'() {
+      ...
+    }
+  }
+}
+```
+
 ## Vue CLI 3
 
 **Q:** CSS中scoped作用
@@ -205,7 +240,11 @@ export default {
   methods: {
     changeComponent() {
       // 这里使用了vuex进行状态管理
-      this.$store.state.page = '...';
+      // this.$store.state.page = '...'; 直接改变Vuex不是很好，应该交给Vuex里面的mutations的函数
+      this.$store.commit({
+        type: 'changePage', // 函数名
+        page: 'hello-world' // 改变的页面名称，注意名字的书写方式
+      });
       this.$root.$emit('update');
     }
   }

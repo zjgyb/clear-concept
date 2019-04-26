@@ -305,3 +305,20 @@ export default {
   }
 </script>
 ```
+
+### 在vue中引入全局自定义CSS
+```js
+// vue.config.js
+module.exports = {
+  ...
+  css: {
+    loaderOptions: {
+      sass: {
+        data: `@import "@/style/_global.scss";`
+      }
+    }
+   }
+  ...
+}
+```
+[参考地址](https://css-tricks.com/how-to-import-a-sass-file-into-every-vue-component-in-an-app/#article-header-id-1)

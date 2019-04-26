@@ -72,6 +72,30 @@
 </script>
 ```
 
+## 描述：Vue如何在自定义组件中点击事件，获取元素失效
+
+举例
+
+```html
+<template>
+  <div>
+    <Button @click.native="btn" ref="button"></Button>
+  </div>
+</template>
+<script>
+  import Button from '../button/button.vue';
+  export default {
+    components: {
+      Button
+    },
+    methods: {
+      btn() {
+        console.log(this.$refs.button.$el);
+      }
+    }
+  }
+</script>
+```
 ## VS Code
 
 ### 描述：解决 VS Code 中 vue 文件格式化时单引号变双引号的问题

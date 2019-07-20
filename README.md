@@ -77,6 +77,47 @@ export default {
 }
 ```
 
+#### model
+绑定元素，这里讲的用途是用于组件之间的通信
+```
+<parent-element 
+  v-model="val"
+/>
+
+<!--
+  等同于
+<parent-element 
+  v-on:value="val"
+  @input="e => val = e.target.value"
+/>
+ -->
+export default {
+  data() {
+    return {
+      val: ''
+    }
+  }
+}
+```
+
+```
+<!-- child-element -->
+<div>
+  <input :value="value" @input="handleVal" />
+</div>
+
+export default {
+  props: {
+    value: String
+  },
+  methods: {
+    handleVal(e) {
+      this.$emit('input', e.target.value);
+    }
+  }
+}
+```
+
 Vuex
 + 如果想监听Vuex也是可以的，例如：
 ```js

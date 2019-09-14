@@ -363,3 +363,16 @@ module.exports = {
 }
 ```
 [参考地址](https://css-tricks.com/how-to-import-a-sass-file-into-every-vue-component-in-an-app/#article-header-id-1)
+
+## Vue I18n问题记录
+
+复数问题: 只能取到前三个参数，不能取到第四个(three apples)及以后参数，在Github里的issue里有讨论
+
+```js
+const messages = {
+  en: {
+    car: 'car | cars',
+    apple: 'no apples | one apple | two apples | three apples'
+  }
+}
+```
